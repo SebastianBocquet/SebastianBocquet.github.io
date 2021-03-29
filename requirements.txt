@@ -1,0 +1,3 @@
+sys
+scholarly
+requests
