@@ -2,9 +2,8 @@ import sys
 import requests
 from scholarly import scholarly
 
-top_tier_bibcodes = ['2020arXiv200907591S', '2021MNRAS.tmp..852G', '2021PhRvD.103d3522C', '2020MNRAS.498..771G', '2020ApJS..247...25B',
-                '2019MNRAS.488.2041G', '2019MNRAS.485...69S', '2019MNRAS.483.2871D', '2018MNRAS.478.3072C',
-                '2018MNRAS.474.2635S', '2017MNRAS.468.3347S', '2016MNRAS.455..258C', '2015MNRAS.454.2305S']
+top_tier_bibcodes = ['2021MNRAS.tmp..852G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
+                     '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
@@ -46,7 +45,7 @@ def main(ads_token):
                 a = ', '.join([paper['author'][i].split(',')[0] for i in range(3)])+' et al.'
             top_tier = True
         # Top-tier
-        elif paper['bibcode'] in top_tier_bibcodes:
+        elif ('Bocquet' in paper['author'][1])|('Bocquet' in paper['author'][2])|(paper['bibcode'] in top_tier_bibcodes):
             for aa,a in enumerate(paper['author'][:5]):
                 if 'Bocquet' in a:
                     a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+1)])+' et al.'
