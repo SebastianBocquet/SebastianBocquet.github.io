@@ -29,7 +29,7 @@ jobs:
     
     - name: commit changes
         run: |
-          git config user.name SebastianBocquet
-          git config user.email sebastian.bocquet@gmail.com
-          chmod +x ./scripts/commit.sh
-          ./scripts/commit.sh
+        git config user.name SebastianBocquet
+        git config user.email sebastian.bocquet@gmail.com
+        chmod +x ./scripts/commit.sh
+        ./scripts/commit.sh
