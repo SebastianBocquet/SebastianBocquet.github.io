@@ -29,8 +29,8 @@ jobs:
       run: python build_pub.py $ADS_DEV_KEY
     
     - name: commit changes
-      run:
+      run: |
         git config user.name SebastianBocquet
         git config user.email sebastian.bocquet@gmail.com
-        chmod +x ./scripts/commit.sh
-        ./scripts/commit.sh
+        chmod +x ./commit.sh
+        ./commit.sh
