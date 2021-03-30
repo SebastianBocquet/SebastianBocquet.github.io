@@ -48,7 +48,11 @@ def main(ads_token):
         elif ('Bocquet' in paper['author'][1])|('Bocquet' in paper['author'][2])|(paper['bibcode'] in top_tier_bibcodes):
             for aa,a in enumerate(paper['author'][:5]):
                 if 'Bocquet' in a:
-                    a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+1)])+' et al.'
+                    # Want minimum of three authors listed
+                    if aa==1:
+                        a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+2)])+' et al.'
+                    else:
+                        a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+1)])+' et al.'
                     top_tier = True
                     break
         # Other
