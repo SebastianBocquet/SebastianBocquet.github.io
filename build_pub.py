@@ -13,12 +13,18 @@ def main(ads_token):
     overview_content = []
 
     # ADS
-    fl = 'author,bibcode,bibstem,citation_count,date,doi,identifier,page,title,volume,year'
-    req = 'https://api.adsabs.harvard.edu/v1/search/query?q=author%3A"bocquet%2Cs"%20database%3Aastronomy&rows=1000&sort=date+desc&fl='+fl
+    who = "author%3A\"bocquet%2Cs\"%20database%3Aastronomy"
+    fl = "fl=author,bibcode,bibstem,citation_count,date,doi,identifier,page,title,volume,year"
+    sort = "sort=date%20desc%2C%20bibcode%20desc"
+    req = "https://api.adsabs.harvard.edu/v1/search/query?q=%s&&%s&%s&rows=1000"%(who, sort, fl)
     r = requests.get(req,
                  headers={'Authorization': 'Bearer '+ads_token})
     ads_papers = r.json()['response']['docs']
-        # Metrics
+    # Somehow strangely, some papers don't have the citation_count key
+    for paper in ads_papers:
+        if 'citation_count' not in paper.keys():
+            paper['citation_count'] = 0
+    # Metrics
     sorted_citation_count = sorted([paper['citation_count'] for paper in ads_papers])[::-1]
     citations = sum(sorted_citation_count)
     hindex = 0
@@ -62,10 +68,17 @@ def main(ads_token):
             a = paper['author'][0].split(',')[0]+' et al.'
             top_tier = False
 
-        if 'doi' in paper.keys():
-            this = "<li>%s (%s), %s, %s, DOI:<a href='%s%s'>%s</a> (<a href='%s%s%s'>ADS abstract</a>)</li>\n"%(a, paper['year'], paper['title'][0], paper['bibstem'][0], doi_prefix, paper['doi'][0],  paper['doi'][0], ads_prefix, paper['bibcode'], ads_suffix)
+        author_year_title = "<li>%s (%s), %s, "%(a, paper['year'], paper['title'][0])
+        if 'volume' in paper.keys():
+            ref = "%s, %s, %s"%(paper['bibstem'][0], paper['volume'], paper['page'][0])
         else:
-            this = "<li>%s (%s), %s, %s (<a href='%s%s%s'>ADS abstract</a>)</li>\n"%(a, paper['year'], paper['title'][0], paper['bibstem'][0], ads_prefix, paper['bibcode'], ads_suffix)
+            ref = "%s"%paper['bibstem'][0]
+        if 'doi' in paper.keys():
+            doi = ", DOI:<a href='%s%s'>%s</a> "%(doi_prefix, paper['doi'][0], paper['doi'][0])
+        else:
+            doi = " "
+        ads_link = "(<a href='%s%s%s'>ADS abstract</a>)"%(ads_prefix, paper['bibcode'], ads_suffix)
+        this = author_year_title+ref+doi+ads_link+"</li>\n"
 
         if top_tier==True:
             top_tier_list.append(this)
