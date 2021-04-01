@@ -68,7 +68,7 @@ def main(ads_token):
             a = paper['author'][0].split(',')[0]+' et al.'
             top_tier = False
 
-        author_year_title = "<li>%s (%s), %s, "%(a, paper['year'], paper['title'][0])
+        author_year_title = "<li>%s (%s), <em>%s</em>, "%(a, paper['year'], paper['title'][0])
         if 'volume' in paper.keys():
             ref = "%s, %s, %s"%(paper['bibstem'][0], paper['volume'], paper['page'][0])
         else:
