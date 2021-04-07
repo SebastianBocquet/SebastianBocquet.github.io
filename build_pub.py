@@ -97,7 +97,7 @@ def main(ads_token):
     for line in lines:
         if 'overview_content' in line:
             out_lines.append("%d refereed publications<br>\n"%refereed)
-            out_lines.append("<a href=\"https://ui.adsabs.harvard.edu/search/p_=0&q=author:'bocquet,s' database:astronomy\">Publications on ADS</a>: %d citations, h-index %d<br>\n"%(citations, hindex))
+            out_lines.append("<a href=\"https://ui.adsabs.harvard.edu/search/p_=0&q=author:\"bocquet,s\" database:astronomy\">Publications on ADS</a>: %d citations, h-index %d<br>\n"%(citations, hindex))
             out_lines.append("<a href=\"https://scholar.google.com/citations?hl=en&user=K9dkRiQAAAAJ\">Profile on Google Scholar</a>: %d citations, h-index %d<br>\n"%(author['citedby'], author['hindex']))
         elif 'top_tier_content' in line:
             out_lines.append('<ol>\n')
