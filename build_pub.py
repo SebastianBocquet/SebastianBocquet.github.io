@@ -2,7 +2,7 @@ import sys
 import requests
 from scholarly import scholarly
 
-top_tier_bibcodes = ['2021MNRAS.tmp..852G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
+top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
