@@ -88,7 +88,7 @@ def main(ads_token):
 
     # Google scholar
     search_query = scholarly.search_author('Sebastian Bocquet')
-    author = scholarly.fill(next(search_query))
+    author = scholarly.fill(next(search_query), sections=['indices',])
 
 
     with open('pub_blank.html', 'r') as f:
