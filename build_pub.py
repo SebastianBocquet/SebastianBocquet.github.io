@@ -30,7 +30,6 @@ def main(ads_token):
     hindex = 0
     while sorted_citation_count[hindex]>=hindex:
         hindex+= 1
-    hindex-= 1
     refereed = 0
     peer_rev_j = ['AJ', 'ApJ', 'ApJS', 'A&A', 'JOSS', 'MNRAS', 'PhRvD', 'PhRvL']
     for paper in ads_papers:
