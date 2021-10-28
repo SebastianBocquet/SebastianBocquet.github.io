@@ -62,8 +62,6 @@ def main(ads_token):
                     break
         # Other
         else:
-            if paper['bibcode']=='2021arXiv210104984G':
-                continue
             a = paper['author'][0].split(',')[0]+' et al.'
             top_tier = False
 
