@@ -36,8 +36,13 @@ def main(ads_token):
         if paper['bibstem'][0] in peer_rev_j:
             refereed+= 1
 
+    # List of DES papers
+    ref = "https://dbweb8.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
+    f = requests.get(ref)
+    DES_paper_list = f.text
+
     # Publication list
-    top_tier_list, other_pub_list = [], []
+    top_tier_list, other_pub_list, DES_pub_list = [], [], []
     for p,paper in enumerate(ads_papers):
         # Skip proposals, zenodo, VizieR
         if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'yCat', 'zndo']:
@@ -48,7 +53,7 @@ def main(ads_token):
                 a = ' & '.join([paper['author'][i].split(',')[0] for i in range(2)])
             else:
                 a = ', '.join([paper['author'][i].split(',')[0] for i in range(3)])+' et al.'
-            top_tier = True
+            pub_type = 'top'
         # Top-tier
         elif ('Bocquet' in paper['author'][1])|('Bocquet' in paper['author'][2])|(paper['bibcode'] in top_tier_bibcodes):
             for aa,a in enumerate(paper['author'][:5]):
@@ -58,12 +63,18 @@ def main(ads_token):
                         a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+2)])+' et al.'
                     else:
                         a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+1)])+' et al.'
-                    top_tier = True
+                    pub_type = 'top'
                     break
         # Other
         else:
+            pub_type = 'other'
+            # Is it a DES paper?
+            for bibcode in paper['identifier']:
+                if 'arXiv' in bibcode:
+                    code = '.'.join((bibcode[9:13],bibcode[14:18]))
+                    if code in DES_paper_list:
+                        pub_type = 'DES'
             a = paper['author'][0].split(',')[0]+' et al.'
-            top_tier = False
 
         author_year_title = "<li>%s (%s), <em>%s</em>, "%(a, paper['year'], paper['title'][0])
         if 'volume' in paper.keys():
@@ -77,10 +88,12 @@ def main(ads_token):
         ads_link = "(<a href='%s%s%s'>ADS abstract</a>)"%(ads_prefix, paper['bibcode'], ads_suffix)
         this = author_year_title+ref+doi+ads_link+"</li>\n"
 
-        if top_tier==True:
+        if pub_type=='top':
             top_tier_list.append(this)
-        else:
+        elif pub_type=='other':
             other_pub_list.append(this)
+        else:
+            DES_pub_list.append(this)
 
 
     # Google scholar
@@ -104,6 +117,11 @@ def main(ads_token):
         elif 'other_pub_content' in line:
             out_lines.append('<ol>\n')
             for p in other_pub_list:
+                out_lines.append(p)
+            out_lines.append('</ol>\n')
+        elif 'DES_pub_content' in line:
+            out_lines.append('<ol>\n')
+            for p in DES_pub_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         else:
