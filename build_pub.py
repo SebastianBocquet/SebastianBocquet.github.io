@@ -109,6 +109,10 @@ def main(ads_token):
             out_lines.append("%d refereed publications<br>\n"%refereed)
             out_lines.append("<a href=\"https://ui.adsabs.harvard.edu/search/p_=0&q=author:&quot;bocquet,s&quot; database:astronomy\">Publications on ADS</a>: %d citations, h-index %d<br>\n"%(citations, hindex))
             out_lines.append("<a href=\"https://scholar.google.com/citations?hl=en&user=K9dkRiQAAAAJ\">Profile on Google Scholar</a>: %d citations, h-index %d<br>\n"%(author['citedby'], author['hindex']))
+            out_lines.append("ORCID: <a href=\"https://orcid.org/0000-0002-4900-805X\">https://orcid.org/0000-0002-4900-805X</a>\n<br>\n<br>\n")
+            out_lines.append("%d first-author or top-tier publications<br>\n"%len(top_tier_list))
+            out_lines.append("%d co-authored publications<br>\n"%len(other_pub_list))
+            out_lines.append("%d publications as DES builder<br>\n"%len(DES_pub_list))
         elif 'top_tier_content' in line:
             out_lines.append('<ol>\n')
             for p in top_tier_list:
