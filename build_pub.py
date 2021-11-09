@@ -40,7 +40,7 @@ def main(ads_token):
     top_tier_list, other_pub_list = [], []
     for p,paper in enumerate(ads_papers):
         # Skip proposals, zenodo, VizieR
-        if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'yCat', 'zndo']:
+        if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'PhDT', 'sptz', 'yCat', 'zndo']:
             continue
         # First-author
         if 'Bocquet' in paper['author'][0]:
