@@ -42,39 +42,47 @@ def main(ads_token):
     DES_paper_list = f.text
 
     # Publication list
-    top_tier_list, other_pub_list, DES_pub_list = [], [], []
+    top_tier_list, co_pub_list, DES_pub_list, other_pub_list = [], [], [], []
     for p,paper in enumerate(ads_papers):
         # Skip proposals, zenodo, VizieR
         if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'yCat', 'zndo']:
             continue
-        # First-author
-        if 'Bocquet' in paper['author'][0]:
-            if len(paper['author'])==2:
-                a = ' & '.join([paper['author'][i].split(',')[0] for i in range(2)])
-            else:
-                a = ', '.join([paper['author'][i].split(',')[0] for i in range(3)])+' et al.'
-            pub_type = 'top'
-        # Top-tier
-        elif ('Bocquet' in paper['author'][1])|('Bocquet' in paper['author'][2])|(paper['bibcode'] in top_tier_bibcodes):
-            for aa,a in enumerate(paper['author'][:5]):
-                if 'Bocquet' in a:
-                    # Want minimum of three authors listed
-                    if aa==1:
-                        a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+2)])+' et al.'
-                    else:
-                        a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+1)])+' et al.'
-                    pub_type = 'top'
-                    break
-        # Other
-        else:
+        # PhD thesis
+        if paper['bibstem'][0]=='PhDT':
+            a = 'Sebastian Bocquet'
             pub_type = 'other'
-            # Is it a DES paper?
-            for bibcode in paper['identifier']:
-                if 'arXiv' in bibcode:
-                    code = '.'.join((bibcode[9:13],bibcode[14:18]))
-                    if code in DES_paper_list:
-                        pub_type = 'DES'
-            a = paper['author'][0].split(',')[0]+' et al.'
+        else:
+            # First-author
+            if 'Bocquet' in paper['author'][0]:
+                if len(paper['author'])==2:
+                    a = ' & '.join([paper['author'][i].split(',')[0] for i in range(2)])
+                else:
+                    a = ', '.join([paper['author'][i].split(',')[0] for i in range(3)])+' et al.'
+                pub_type = 'top'
+            # Top-tier
+            elif ('Bocquet' in paper['author'][1])|('Bocquet' in paper['author'][2])|(paper['bibcode'] in top_tier_bibcodes):
+                for aa,a in enumerate(paper['author'][:5]):
+                    if 'Bocquet' in a:
+                        # Want minimum of three authors listed
+                        if aa==1:
+                            a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+2)])+' et al.'
+                        else:
+                            a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+1)])+' et al.'
+                        pub_type = 'top'
+                        break
+            # Other
+            else:
+                pub_type = 'coauthor'
+                # Is it a DES paper?
+                for bibcode in paper['identifier']:
+                    if 'arXiv' in bibcode:
+                        code = '.'.join((bibcode[9:13],bibcode[14:18]))
+                        if code in DES_paper_list:
+                            pub_type = 'DES'
+                # Is it the ATel?
+                if paper['bibstem'][0]=='ATel':
+                    pub_type = 'other'
+                a = paper['author'][0].split(',')[0]+' et al.'
 
         author_year_title = "<li>%s (%s), <em>%s</em>, "%(a, paper['year'], paper['title'][0])
         if 'volume' in paper.keys():
@@ -90,10 +98,12 @@ def main(ads_token):
 
         if pub_type=='top':
             top_tier_list.append(this)
-        elif pub_type=='other':
-            other_pub_list.append(this)
-        else:
+        elif pub_type=='coauthor':
+            co_pub_list.append(this)
+        elif pub_type=='DES':
             DES_pub_list.append(this)
+        else:
+            other_pub_list.append(this)
 
 
     # Google scholar
@@ -111,21 +121,26 @@ def main(ads_token):
             out_lines.append("<a href=\"https://scholar.google.com/citations?hl=en&user=K9dkRiQAAAAJ\">Profile on Google Scholar</a>: %d citations, h-index %d<br>\n"%(author['citedby'], author['hindex']))
             out_lines.append("ORCID: <a href=\"https://orcid.org/0000-0002-4900-805X\">https://orcid.org/0000-0002-4900-805X</a>\n<br>\n<br>\n")
             out_lines.append("%d first-author or top-tier publications<br>\n"%len(top_tier_list))
-            out_lines.append("%d co-authored publications<br>\n"%len(other_pub_list))
+            out_lines.append("%d co-authored publications<br>\n"%len(co_pub_list))
             out_lines.append("%d publications as DES builder<br>\n"%len(DES_pub_list))
         elif 'top_tier_content' in line:
             out_lines.append('<ol>\n')
             for p in top_tier_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
-        elif 'other_pub_content' in line:
+        elif 'co_pub_content' in line:
             out_lines.append('<ol>\n')
-            for p in other_pub_list:
+            for p in co_pub_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         elif 'DES_pub_content' in line:
             out_lines.append('<ol>\n')
             for p in DES_pub_list:
+                out_lines.append(p)
+            out_lines.append('</ol>\n')
+        elif 'other_pub_content' in line:
+            out_lines.append('<ol>\n')
+            for p in other_pub_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         else:
