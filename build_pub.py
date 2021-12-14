@@ -4,6 +4,7 @@ from scholarly import scholarly
 
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
+DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
@@ -40,6 +41,8 @@ def main(ads_token):
     ref = "https://dbweb8.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
     f = requests.get(ref)
     DES_paper_list = f.text
+    # Hack until DES pub page is updated
+    DES_paper_list = DES_paper_list+( 'arXiv:2112.01541')
 
     # Publication list
     top_tier_list, co_pub_list, DES_pub_list, other_pub_list = [], [], [], []
@@ -73,12 +76,13 @@ def main(ads_token):
             # Other
             else:
                 pub_type = 'coauthor'
-                # Is it a DES paper?
-                for bibcode in paper['identifier']:
-                    if 'arXiv' in bibcode:
-                        code = '.'.join((bibcode[9:13],bibcode[14:18]))
-                        if code in DES_paper_list:
-                            pub_type = 'DES'
+                # Is it a DES builder paper?
+                if not any(x in paper['identifier'] for x in DES_coauthor_bibcodes):
+                    for bibcode in paper['identifier']:
+                        if 'arXiv' in bibcode:
+                            code = '.'.join((bibcode[9:13],bibcode[13:18]))
+                            if (float(code[:2])>=21)&(code in DES_paper_list):
+                                pub_type = 'DES'
                 # Is it the ATel?
                 if paper['bibstem'][0]=='ATel':
                     pub_type = 'other'
@@ -119,10 +123,8 @@ def main(ads_token):
             out_lines.append("%d refereed publications<br>\n"%refereed)
             out_lines.append("<a href=\"https://ui.adsabs.harvard.edu/search/p_=0&q=author:&quot;bocquet,s&quot; database:astronomy\">Publications on ADS</a>: %d citations, h-index %d<br>\n"%(citations, hindex))
             out_lines.append("<a href=\"https://scholar.google.com/citations?hl=en&user=K9dkRiQAAAAJ\">Profile on Google Scholar</a>: %d citations, h-index %d<br>\n"%(author['citedby'], author['hindex']))
-            out_lines.append("ORCID: <a href=\"https://orcid.org/0000-0002-4900-805X\">https://orcid.org/0000-0002-4900-805X</a>\n<br>\n<br>\n")
-            out_lines.append("%d first-author or top-tier publications<br>\n"%len(top_tier_list))
-            out_lines.append("%d co-authored publications<br>\n"%len(co_pub_list))
-            out_lines.append("%d publications as DES builder<br>\n"%len(DES_pub_list))
+            out_lines.append("ORCID: <a href=\"https://orcid.org/0000-0002-4900-805X\">https://orcid.org/0000-0002-4900-805X</a>")
+            # out_lines.append("%d first-author or top-tier publications, %d co-authored publications, %d publications as DES builder\n"%(len(top_tier_list), len(co_pub_list), len(DES_pub_list)))
         elif 'top_tier_content' in line:
             out_lines.append('<ol>\n')
             for p in top_tier_list:
