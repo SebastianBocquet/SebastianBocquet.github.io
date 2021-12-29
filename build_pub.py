@@ -41,8 +41,6 @@ def main(ads_token):
     ref = "https://dbweb8.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
     f = requests.get(ref)
     DES_paper_list = f.text
-    # Hack until DES pub page is updated
-    DES_paper_list = DES_paper_list+( 'arXiv:2112.01541')
 
     # Publication list
     top_tier_list, co_pub_list, DES_pub_list, other_pub_list = [], [], [], []
