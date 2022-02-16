@@ -4,7 +4,7 @@ from scholarly import scholarly
 
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
-DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541']
+DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
