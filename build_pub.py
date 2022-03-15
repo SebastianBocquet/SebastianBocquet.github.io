@@ -5,6 +5,7 @@ from scholarly import scholarly
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440']
+DES_builder_bibcodes = ['2022arXiv220307128D', '2022arXiv220210480C', '2022arXiv220208233L', '2022arXiv220111142M']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
@@ -79,7 +80,7 @@ def main(ads_token):
                     for bibcode in paper['identifier']:
                         if 'arXiv' in bibcode:
                             code = '.'.join((bibcode[9:13],bibcode[13:18]))
-                            if (float(code[:2])>=21)&(code in DES_paper_list):
+                            if ((float(code[:2])>=21)&(code in DES_paper_list))|(bibcode in DES_builder_bibcodes):
                                 pub_type = 'DES'
                 # Is it the ATel?
                 if paper['bibstem'][0]=='ATel':
