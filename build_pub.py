@@ -6,6 +6,7 @@ top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.48
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440']
 DES_builder_bibcodes = ['2022arXiv220307128D', '2022arXiv220210480C', '2022arXiv220208233L', '2022arXiv220111142M']
+white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
@@ -44,7 +45,7 @@ def main(ads_token):
     DES_paper_list = f.text
 
     # Publication list
-    top_tier_list, co_pub_list, DES_pub_list, other_pub_list = [], [], [], []
+    top_tier_list, co_pub_list, DES_pub_list, white_paper_list, other_pub_list = [], [], [], [], []
     for p,paper in enumerate(ads_papers):
         # Skip proposals, zenodo, VizieR
         if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'yCat', 'zndo']:
@@ -82,6 +83,10 @@ def main(ads_token):
                             code = '.'.join((bibcode[9:13],bibcode[13:18]))
                             if ((float(code[:2])>=21)&(code in DES_paper_list))|(bibcode in DES_builder_bibcodes):
                                 pub_type = 'DES'
+                # White papers
+                for bibcode in paper['identifier']:
+                    if bibcode in white_paper_bibcodes:
+                        pub_type = 'white_paper'
                 # Is it the ATel?
                 if paper['bibstem'][0]=='ATel':
                     pub_type = 'other'
@@ -105,6 +110,8 @@ def main(ads_token):
             co_pub_list.append(this)
         elif pub_type=='DES':
             DES_pub_list.append(this)
+        elif pub_type=='white_paper':
+            white_paper_list.append(this)
         else:
             other_pub_list.append(this)
 
@@ -137,6 +144,11 @@ def main(ads_token):
         elif 'DES_pub_content' in line:
             out_lines.append('<ol>\n')
             for p in DES_pub_list:
+                out_lines.append(p)
+            out_lines.append('</ol>\n')
+        elif 'white_paper_content' in line:
+            out_lines.append('<ol>\n')
+            for p in white_paper_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         elif 'other_pub_content' in line:
