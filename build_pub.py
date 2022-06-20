@@ -7,7 +7,7 @@ top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.48
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440']
 DES_builder_bibcodes = ['2022arXiv220307128D', '2022arXiv220210480C', '2022arXiv220208233L', '2022arXiv220111142M',
                         '2022arXiv220311306K', '2022arXiv220312439O', '2022arXiv220312440C', '2022arXiv220316565D',
-                        '2022arXiv220405924M']
+                        '2022arXiv220405924M', '2022arXiv220606928M', '2022arXiv220608591C']
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
