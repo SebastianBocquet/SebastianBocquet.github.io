@@ -8,7 +8,8 @@ DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.
 DES_builder_bibcodes = [ '2022arXiv220111142M', '2022arXiv220311306K', '2022arXiv220312439O',
                          '2022arXiv220312440C', '2022arXiv220316565D', '2022arXiv220606928M',
                          '2022arXiv220612085D', '2022arXiv220708520G', '2022arXiv220705583W',
-                         '2022arXiv220705766D']
+                         '2022arXiv220705766D', '2022arXiv220711937S', '2022arXiv220805491Y',
+                         '2022MNRAS.515.4587W']
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
