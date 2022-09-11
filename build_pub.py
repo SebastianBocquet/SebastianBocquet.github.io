@@ -4,7 +4,7 @@ from scholarly import scholarly
 
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
-DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440']
+DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W']
 DES_builder_bibcodes = [ '2022arXiv220111142M', '2022arXiv220311306K', '2022arXiv220312439O',
                          '2022arXiv220312440C', '2022arXiv220316565D', '2022arXiv220606928M',
                          '2022arXiv220612085D', '2022arXiv220708520G', '2022arXiv220705583W',
