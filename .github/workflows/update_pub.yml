@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: 3.9
     - name: add packages
-      run: conda install requests scholarly
+      run: conda install -c conda-forge requests scholarly
     - uses: actions/checkout@v3
     - name: Execute the script
       env:
