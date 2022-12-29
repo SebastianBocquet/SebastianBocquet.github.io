@@ -7,30 +7,25 @@ on:
 
 jobs:
   update:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
-
-    - name: Checkout Code
-      uses: actions/checkout@v2
-
     - name: Setup Python Environment
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: 3.9
-
-    - name: Install Requirements
-      run: pip install -r requirements.txt
-
+    - run: pip install requests scholarly
+    - uses: actions/checkout@v3
     - name: Execute the script
       env:
         ADS_DEV_KEY: ${{ secrets.ADS_TOKEN }}
       run: python build_pub.py $ADS_DEV_KEY
-    
     - name: commit changes
       run: |
         git config user.name SebastianBocquet
         git config user.email sebastian.bocquet@gmail.com
-        chmod +x ./commit.sh
-        ./commit.sh
+        git add pub.html
+        git commit -m "Auto-update publication page"
+        git push origin main

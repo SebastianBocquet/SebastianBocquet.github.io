@@ -1,6 +1,6 @@
 import sys
 import requests
-from scholarly import scholarly
+from scholarly import ProxyGenerator, scholarly
 
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
@@ -23,12 +23,13 @@ def main(ads_token):
     overview_content = []
 
     # ADS
-    who = "author%3A\"bocquet%2Cs\"%20database%3Aastronomy"
-    fl = "fl=author,bibcode,bibstem,citation_count,date,doi,identifier,page,title,volume,year"
-    sort = "sort=date%20desc%2C%20bibcode%20desc"
-    req = "https://api.adsabs.harvard.edu/v1/search/query?q=%s&&%s&%s&rows=1000"%(who, sort, fl)
-    r = requests.get(req,
-                 headers={'Authorization': 'Bearer '+ads_token})
+    r = requests.get("https://api.adsabs.harvard.edu/v1/search/query",
+                     headers={'Authorization': 'Bearer '+ads_token},
+                     params={'q': 'author:"bocquet,s" database:astronomy',
+                             'fl': 'author,bibcode,bibstem,citation_count,date,doi,identifier,page,title,volume,year',
+                             'sort': 'date desc,bibcode desc',
+                             'rows': 1000},
+                     timeout=6.1)
     ads_papers = r.json()['response']['docs']
     # Somehow strangely, some papers don't have the citation_count key
     for paper in ads_papers:
@@ -48,7 +49,7 @@ def main(ads_token):
 
     # List of DES papers
     ref = "https://dbweb8.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
-    f = requests.get(ref)
+    f = requests.get(ref, timeout=6.1)
     DES_paper_list = f.text
 
     # Publication list
@@ -124,6 +125,9 @@ def main(ads_token):
 
 
     # Google scholar
+    pg = ProxyGenerator()
+    pg.FreeProxies()
+    scholarly.use_proxy(pg)
     search_query = scholarly.search_author('Sebastian Bocquet')
     author = scholarly.fill(next(search_query), sections=['indices',])
 
