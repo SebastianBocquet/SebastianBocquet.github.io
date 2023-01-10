@@ -125,12 +125,15 @@ def main(ads_token):
             other_pub_list.append(this)
 
 
-    # Google scholar
-    pg = ProxyGenerator()
-    pg.FreeProxies()
-    scholarly.use_proxy(pg)
-    author = scholarly.search_author_id('K9dkRiQAAAAJ')
-    scholarly_info = scholarly.fill(author, sections=['indices',])
+    # Google scholar (fails more often than not)
+    try:
+        pg = ProxyGenerator()
+        pg.FreeProxies()
+        scholarly.use_proxy(pg)
+        author = scholarly.search_author_id('K9dkRiQAAAAJ')
+        scholarly_info = scholarly.fill(author, sections=['indices',])
+    except:
+        scholarly_info = None
 
 
     with open('pub_blank.html', 'r') as f:
@@ -140,7 +143,8 @@ def main(ads_token):
         if 'overview_content' in line:
             out_lines.append("%d refereed publications<br>\n"%refereed)
             out_lines.append("<a href=\"https://ui.adsabs.harvard.edu/search/p_=0&q=author:&quot;bocquet,s&quot; database:astronomy\">Publications on ADS</a>: %d citations, h-index %d<br>\n"%(citations, hindex))
-            out_lines.append("<a href=\"https://scholar.google.com/citations?hl=en&user=K9dkRiQAAAAJ\">Profile on Google Scholar</a>: %d citations, h-index %d<br>\n"%(scholarly_info['citedby'], scholarly_info['hindex']))
+            if scholarly_info is not None:
+                out_lines.append("<a href=\"https://scholar.google.com/citations?hl=en&user=K9dkRiQAAAAJ\">Profile on Google Scholar</a>: %d citations, h-index %d<br>\n"%(scholarly_info['citedby'], scholarly_info['hindex']))
             out_lines.append("ORCID: <a href=\"https://orcid.org/0000-0002-4900-805X\">https://orcid.org/0000-0002-4900-805X</a>")
             # out_lines.append("%d first-author or top-tier publications, %d co-authored publications, %d publications as DES builder\n"%(len(top_tier_list), len(co_pub_list), len(DES_pub_list)))
         elif 'top_tier_content' in line:
