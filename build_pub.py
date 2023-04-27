@@ -14,7 +14,8 @@ DES_builder_bibcodes = ['2022arXiv220111142M', '2022arXiv220311306K', '2022arXiv
                         '2022arXiv221005057C', '2022arXiv221008633S', '2022arXiv221010802Z',
                         '2022arXiv221114291D', '2022arXiv221211319S', '2022arXiv221203734P',
                         '2022arXiv221116593S', '2023arXiv230204878B', '2023MNRAS.521..836S',
-                        '2023MNRAS.521.1184L']
+                        '2023MNRAS.521.1184L', '2023MNRAS.tmp..924D', '2023PhRvD.107h3504A',
+                        '2023arXiv230401858L',]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
@@ -89,9 +90,11 @@ def main(ads_token):
                 # Is it a DES builder paper?
                 if not any(x in paper['identifier'] for x in DES_coauthor_bibcodes):
                     for bibcode in paper['identifier']:
-                        if bibcode[4:9]=='arXiv':
+                        if bibcode in DES_builder_bibcodes:
+                            pub_type = 'DES'
+                        elif bibcode[4:9]=='arXiv':
                             code = '.'.join((bibcode[9:13],bibcode[13:18]))
-                            if ((float(code[:2])>=21)&(code in DES_paper_list))|(bibcode in DES_builder_bibcodes):
+                            if (float(code[:2])>=21) and (code in DES_paper_list):
                                 pub_type = 'DES'
                 # White papers
                 for bibcode in paper['identifier']:
