@@ -5,17 +5,12 @@ from scholarly import ProxyGenerator, scholarly
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W']
-DES_builder_bibcodes = ['2022arXiv220111142M', '2022arXiv220311306K', '2022arXiv220312439O',
-                        '2022arXiv220312440C', '2022arXiv220316565D', '2022arXiv220606928M',
-                        '2022arXiv220612085D', '2022arXiv220708520G', '2022arXiv220705583W',
-                        '2022arXiv220705766D', '2022arXiv220711937S', '2022arXiv220805491Y',
-                        '2022MNRAS.515.4587W', '2022arXiv220905519G', '2022arXiv220905853G',
-                        '2022arXiv220906897C', '2022arXiv220909782E', '2022arXiv221003977M',
-                        '2022arXiv221005057C', '2022arXiv221008633S', '2022arXiv221010802Z',
-                        '2022arXiv221114291D', '2022arXiv221211319S', '2022arXiv221203734P',
-                        '2022arXiv221116593S', '2023arXiv230204878B', '2023MNRAS.521..836S',
-                        '2023MNRAS.521.1184L', '2023MNRAS.tmp..924D', '2023PhRvD.107h3504A',
-                        '2023arXiv230401858L', '2023MNRAS.tmp.1157U']
+DES_builder_bibcodes = ['2023MNRAS.521..836S',
+                        '2023AJ....165..222L',
+                        '2023MNRAS.522.1951D',
+                        '2023MNRAS.522.3163S',
+                        'arXiv:2304.13570',
+                        ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
