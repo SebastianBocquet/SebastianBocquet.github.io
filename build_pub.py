@@ -56,7 +56,7 @@ def main(ads_token):
     top_tier_list, co_pub_list, DES_pub_list, white_paper_list, other_pub_list = [], [], [], [], []
     for p,paper in enumerate(ads_papers):
         # Skip proposals, zenodo, VizieR
-        if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'yCat', 'zndo']:
+        if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'trec', 'yCat', 'zndo']:
             continue
         # PhD thesis
         if paper['bibstem'][0]=='PhDT':
