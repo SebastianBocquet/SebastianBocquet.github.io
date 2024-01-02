@@ -4,7 +4,8 @@ from scholarly import ProxyGenerator, scholarly
 
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G',
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
-DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W']
+DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W',
+                         'arXiv:2310.00059', 'arXiv:2310.13207', 'arXiv:2311.07512',]
 DES_builder_bibcodes = ['2023arXiv230900671Z',
                         '2023arXiv230906593A',
                         '2023MNRAS.521..836S',
