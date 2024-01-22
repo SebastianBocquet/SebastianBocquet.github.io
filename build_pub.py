@@ -15,6 +15,7 @@ DES_builder_bibcodes = ['2023arXiv230900671Z',
                         'arXiv:2304.13570',
                         '2023MNRAS.522.4132Y',
                         'arXiv:2305.17173',
+                        'arXiv:2401.02929',
                         ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
