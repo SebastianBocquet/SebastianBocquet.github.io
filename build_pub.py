@@ -6,17 +6,11 @@ top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.48
                      '2018MNRAS.478.3072C', '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W',
                          'arXiv:2310.00059', 'arXiv:2310.13207', 'arXiv:2311.07512',]
-DES_builder_bibcodes = ['2023arXiv230900671Z',
-                        '2023arXiv230906593A',
-                        '2023MNRAS.521..836S',
-                        '2023AJ....165..222L',
-                        '2023MNRAS.522.1951D',
-                        '2023MNRAS.522.3163S',
-                        'arXiv:2304.13570',
-                        '2023MNRAS.522.4132Y',
-                        'arXiv:2305.17173',
-                        'arXiv:2401.02929',
-                        'arXiv:2401.12049',
+DES_builder_bibcodes = ['2023arXiv230900671Z', '2023arXiv230906593A',
+                        '2023MNRAS.521..836S', '2023AJ....165..222L', '2023MNRAS.522.1951D',
+                        '2023MNRAS.522.3163S', 'arXiv:2304.13570', '2023MNRAS.522.4132Y',
+                        'arXiv:2305.17173', 'arXiv:2401.02929', 'arXiv:2401.12049',
+                        'arXiv:2402.10697', 'arXiv:2402.10696',
                         ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
