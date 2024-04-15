@@ -9,7 +9,7 @@ DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.
 DES_builder_bibcodes = ['arXiv:2309.00671', 'arXiv:2309.06593', '2023MNRAS.521..836S', '2023AJ....165..222L',
                         '2023MNRAS.522.1951D', '2023MNRAS.522.3163S', 'arXiv:2304.13570', '2023MNRAS.522.4132Y',
                         'arXiv:2305.17173', 'arXiv:2401.02929', 'arXiv:2401.12049', 'arXiv:2402.10697',
-                        'arXiv:2402.10696', 'arXiv:2403.02314',
+                        'arXiv:2402.10696', 'arXiv:2403.02314', 'arXiv:2404.06098',
                         ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 
