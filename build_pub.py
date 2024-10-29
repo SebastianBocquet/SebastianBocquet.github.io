@@ -14,6 +14,7 @@ DES_builder_bibcodes = ['arXiv:2309.00671', 'arXiv:2309.06593', '2023MNRAS.521..
                         'arXiv:2405.10881', '2024MNRAS.534.2328D', '2024ApJ...973L..14D',
                         ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
+skip_bibcodes = ['2024ApJ...973L..14A', ]
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
@@ -55,8 +56,14 @@ def main(ads_token):
     # Publication list
     top_tier_list, co_pub_list, DES_pub_list, white_paper_list, other_pub_list = [], [], [], [], []
     for p,paper in enumerate(ads_papers):
+        skip = False
         # Skip proposals, zenodo, VizieR
         if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'trec', 'yCat', 'zndo']:
+            skip = True
+        for bibcode in paper['identifier']:
+            if bibcode in skip_bibcodes:
+                skip = True
+        if skip:
             continue
         # PhD thesis
         if paper['bibstem'][0]=='PhDT':
