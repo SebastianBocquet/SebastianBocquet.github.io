@@ -3,7 +3,7 @@ import requests
 from scholarly import ProxyGenerator, scholarly
 
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G', '2018MNRAS.478.3072C',
-                     '2018MNRAS.474.2635S', '2016MNRAS.455..258C',]
+                     '2018MNRAS.474.2635S', '2016MNRAS.455..258C', 'arXiv:2407.10961']
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W',
                          'arXiv:2310.00059', 'arXiv:2310.13207', 'arXiv:2311.07512', 'arXiv:2304.10128',
                          'arXiv:2404.02153', 'arXiv:2407.10961',]
