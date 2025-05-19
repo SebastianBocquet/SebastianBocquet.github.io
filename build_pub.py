@@ -35,9 +35,9 @@ def main(ads_token):
                      timeout=6.1)
     ads_papers = r.json()['response']['docs']
     # Somehow strangely, some papers don't have the citation_count key
-    for paper in ads_papers:
-        if 'citation_count' not in paper.keys():
-            paper['citation_count'] = 0
+    # for paper in ads_papers:
+    #     if 'citation_count' not in paper.keys():
+    #         paper['citation_count'] = 0
     # Metrics
     sorted_citation_count = sorted([paper['citation_count'] for paper in ads_papers])[::-1]
     citations = sum(sorted_citation_count)
@@ -57,6 +57,7 @@ def main(ads_token):
 
     # Publication list
     top_tier_list, co_pub_list, DES_pub_list, white_paper_list, other_pub_list = [], [], [], [], []
+    top_tier_count, first_author_count = 0, 0
     for p,paper in enumerate(ads_papers):
         skip = False
         # Skip proposals, zenodo, VizieR
@@ -74,6 +75,8 @@ def main(ads_token):
         else:
             # First-author
             if 'Bocquet' in paper['author'][0]:
+                first_author_count+= paper['citation_count']
+                top_tier_count+= paper['citation_count']
                 if len(paper['author'])==2:
                     a = ' & '.join([paper['author'][i].split(',')[0] for i in range(2)])
                 else:
@@ -81,6 +84,7 @@ def main(ads_token):
                 pub_type = 'top'
             # Top-tier
             elif ('Bocquet' in paper['author'][1])|('Bocquet' in paper['author'][2])|(paper['bibcode'] in top_tier_bibcodes):
+                top_tier_count+= paper['citation_count']
                 for aa,a in enumerate(paper['author'][:5]):
                     if 'Bocquet' in a:
                         # Want minimum of three authors listed
@@ -158,6 +162,7 @@ def main(ads_token):
             out_lines.append("ORCID: <a href=\"https://orcid.org/0000-0002-4900-805X\">https://orcid.org/0000-0002-4900-805X</a>")
             # out_lines.append("%d first-author or top-tier publications, %d co-authored publications, %d publications as DES builder\n"%(len(top_tier_list), len(co_pub_list), len(DES_pub_list)))
         elif 'top_tier_content' in line:
+            out_lines.append("{} citations, of which {} citations of first-author work".format(top_tier_count, first_author_count))
             out_lines.append('<ol>\n')
             for p in top_tier_list:
                 out_lines.append(p)
