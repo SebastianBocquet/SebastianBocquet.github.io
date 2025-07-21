@@ -51,7 +51,7 @@ def main(ads_token):
             refereed+= 1
 
     # List of DES papers
-    ref = "https://dbweb8.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
+    ref = "https://dbweb9.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
     f = requests.get(ref, timeout=6.1)
     DES_paper_list = f.text
 
