@@ -163,27 +163,27 @@ def main(ads_token):
             # out_lines.append("%d first-author or top-tier publications, %d co-authored publications, %d publications as DES builder\n"%(len(top_tier_list), len(co_pub_list), len(DES_pub_list)))
         elif 'top_tier_content' in line:
             out_lines.append("<p>{} citations, of which {} citations of first-author publications</p>\n".format(top_tier_count, first_author_count))
-            out_lines.append('<ol>\n')
+            out_lines.append('<ol reversed>\n')
             for p in top_tier_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         elif 'co_pub_content' in line:
-            out_lines.append('<ol>\n')
+            out_lines.append('<ol reversed>\n')
             for p in co_pub_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         elif 'DES_pub_content' in line:
-            out_lines.append('<ol>\n')
+            out_lines.append('<ol reversed>\n')
             for p in DES_pub_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         elif 'white_paper_content' in line:
-            out_lines.append('<ol>\n')
+            out_lines.append('<ol reversed>\n')
             for p in white_paper_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         elif 'other_pub_content' in line:
-            out_lines.append('<ol>\n')
+            out_lines.append('<ol reversed>\n')
             for p in other_pub_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
