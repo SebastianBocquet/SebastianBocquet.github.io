@@ -7,7 +7,7 @@ top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.48
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W',
                          'arXiv:2310.00059', 'arXiv:2310.13207', 'arXiv:2311.07512', 'arXiv:2304.10128',
                          'arXiv:2404.02153', 'arXiv:2407.10961', 'arXiv:2503.13631', 'arXiv:2503.13632',
-                         'arXiv:2503.17271', 'arXiv:2502.12914']
+                         'arXiv:2503.17271', 'arXiv:2502.12914', 'arXiv:2509.02068']
 DES_builder_bibcodes = ['arXiv:2309.00671', 'arXiv:2309.06593', '2023MNRAS.521..836S', '2023AJ....165..222L',
                         '2023MNRAS.522.1951D', '2023MNRAS.522.3163S', 'arXiv:2304.13570', '2023MNRAS.522.4132Y',
                         'arXiv:2305.17173', 'arXiv:2401.02929', 'arXiv:2401.12049', 'arXiv:2402.10697',
@@ -51,7 +51,7 @@ def main(ads_token):
             refereed+= 1
 
     # List of DES papers
-    ref = "https://dbweb9.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
+    ref = "https://dbweb2.fnal.gov:8443/DESPub/app/PB/pub/pbpublished"
     f = requests.get(ref, timeout=6.1)
     DES_paper_list = f.text
 
