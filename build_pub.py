@@ -27,7 +27,7 @@ DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.1174
                         'arXiv:2409.04535', 'arXiv:2408.01001', 'arXiv:2410.20205', 'arXiv:2506.07432',
                         'arXiv:2506.13439', 'arXiv:2507.21459', 'arXiv:2501.06664', 'arXiv:2508.14018',
                         'arXiv:2509.07943', 'arXiv:2509.07964', 'arXiv:2509.18967', 'arXiv:2510.07511',
-                        'arXiv:2510.11684', 'arXiv:2510.23565', 'arXiv:2510.23566',]
+                        'arXiv:2510.11684', 'arXiv:2510.23565', 'arXiv:2510.23566', 'arXiv:2511.07517']
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 skip_bibcodes = []
 
