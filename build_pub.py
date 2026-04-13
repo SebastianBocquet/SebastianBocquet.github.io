@@ -52,9 +52,9 @@ def main(ads_token):
                      timeout=6.1)
     ads_papers = r.json()['response']['docs']
     # Somehow strangely, some papers don't have the citation_count key
-    # for paper in ads_papers:
-    #     if 'citation_count' not in paper.keys():
-    #         paper['citation_count'] = 0
+    for paper in ads_papers:
+        if 'citation_count' not in paper.keys():
+            paper['citation_count'] = 0
     # Metrics
     sorted_citation_count = sorted([paper['citation_count'] for paper in ads_papers])[::-1]
     citations = sum(sorted_citation_count)
