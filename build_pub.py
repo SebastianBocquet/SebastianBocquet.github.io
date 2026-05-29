@@ -8,6 +8,8 @@ DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.
                          'arXiv:2310.00059', 'arXiv:2310.13207', 'arXiv:2311.07512', 'arXiv:2304.10128',
                          'arXiv:2404.02153', 'arXiv:2407.10961', 'arXiv:2503.13631', 'arXiv:2503.13632',
                          'arXiv:2503.17271', 'arXiv:2502.12914', 'arXiv:2509.02068']
+SPT_senior_bibcodes = ['arXiv:2602.11279', 'arXiv:2603.20163', 'arXiv:2605.01022', 'arXiv:2602.10107',
+                       'arXiv:2601.20551', 'arXiv:2602.06334']
 DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.11740', 'arXiv:2201.02762',
                         '2023MNRAS.521..836S',
                         'arXiv:2203.16565', 'arXiv:2201.11142', 'arXiv:2203.07128', 'arXiv:2203.11306',
@@ -30,7 +32,7 @@ DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.1174
                         'arXiv:2510.11684', 'arXiv:2510.23565', 'arXiv:2510.23566', 'arXiv:2511.07517',
                         'arXiv:2512.01260', 'arXiv:2512.01261', 'arXiv:2512.18935', 'arXiv:2601.14484',
                         'arXiv:2601.14559', 'arXiv:2601.14833', 'arXiv:2601.14859', 'arXiv:2601.14864',
-                        'arXiv:2601.15175', 'arXiv:2602.10065'
+                        'arXiv:2601.15175', 'arXiv:2602.10065', 'arXiv:2605.27221',
                         ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 skip_bibcodes = []
@@ -73,7 +75,7 @@ def main(ads_token):
     # DES_paper_list = f.text
 
     # Publication list
-    top_tier_list, co_pub_list, DES_pub_list, white_paper_list, other_pub_list = [], [], [], [], []
+    top_tier_list, co_pub_list, SPT_pub_list, DES_pub_list, white_paper_list, other_pub_list = [], [], [], [], [], []
     top_tier_count, first_author_count = 0, 0
     for p,paper in enumerate(ads_papers):
         skip = False
@@ -119,6 +121,10 @@ def main(ads_token):
                     for bibcode in paper['identifier']:
                         if bibcode in DES_builder_bibcodes:
                             pub_type = 'DES'
+                # SPT paper
+                for bibcode in paper['identifier']:
+                    if bibcode in SPT_senior_bibcodes:
+                        pub_type = 'SPT'
                 # White papers
                 for bibcode in paper['identifier']:
                     if bibcode in white_paper_bibcodes:
@@ -144,6 +150,8 @@ def main(ads_token):
             top_tier_list.append(this)
         elif pub_type=='coauthor':
             co_pub_list.append(this)
+        elif pub_type == 'SPT':
+            SPT_pub_list.append(this)
         elif pub_type=='DES':
             DES_pub_list.append(this)
         elif pub_type=='white_paper':
@@ -183,6 +191,11 @@ def main(ads_token):
         elif 'co_pub_content' in line:
             out_lines.append('<ol reversed>\n')
             for p in co_pub_list:
+                out_lines.append(p)
+            out_lines.append('</ol>\n')
+        elif 'SPT_pub_content' in line:
+            out_lines.append('<ol reversed>\n')
+            for p in SPT_pub_list:
                 out_lines.append(p)
             out_lines.append('</ol>\n')
         elif 'DES_pub_content' in line:
