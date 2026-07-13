@@ -3,13 +3,13 @@ import requests
 from scholarly import ProxyGenerator, scholarly
 
 top_tier_bibcodes = ['2021MNRAS.504.1253G', '2020MNRAS.498..771G', '2019MNRAS.488.2041G', '2018MNRAS.478.3072C',
-                     '2018MNRAS.474.2635S', '2016MNRAS.455..258C', 'arXiv:2407.10961']
+                     '2018MNRAS.474.2635S', '2016MNRAS.455..258C', 'arXiv:2407.10961', 'arXiv:2607.01175']
 DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.07440', '2022MNRAS.515.4471W',
                          'arXiv:2310.00059', 'arXiv:2310.13207', 'arXiv:2311.07512', 'arXiv:2304.10128',
                          'arXiv:2404.02153', 'arXiv:2407.10961', 'arXiv:2503.13631', 'arXiv:2503.13632',
                          'arXiv:2503.17271', 'arXiv:2502.12914', 'arXiv:2509.02068']
 SPT_senior_bibcodes = ['arXiv:2602.11279', 'arXiv:2603.20163', 'arXiv:2605.01022', 'arXiv:2602.10107',
-                       'arXiv:2601.20551', 'arXiv:2602.06334', 'arXiv:2606.26223']
+                       'arXiv:2601.20551', 'arXiv:2602.06334', 'arXiv:2606.26223', 'arXiv:2607.05784']
 DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.11740', 'arXiv:2201.02762',
                         '2023MNRAS.521..836S',
                         'arXiv:2203.16565', 'arXiv:2201.11142', 'arXiv:2203.07128', 'arXiv:2203.11306',
@@ -36,6 +36,7 @@ DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.1174
                         ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 skip_bibcodes = []
+skip_title = ['On the cosmology dependence of the cluster weak-lensing mass bias']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
@@ -77,7 +78,7 @@ def main(ads_token):
     # Publication list
     top_tier_list, co_pub_list, SPT_pub_list, DES_pub_list, white_paper_list, other_pub_list = [], [], [], [], [], []
     top_tier_count, first_author_count = 0, 0
-    for p,paper in enumerate(ads_papers):
+    for p, paper in enumerate(ads_papers):
         skip = False
         # Skip proposals, zenodo, VizieR
         if paper['bibstem'][0] in ['ascl', 'hst', 'MPEC', 'sptz', 'trec', 'yCat', 'zndo']:
@@ -85,33 +86,37 @@ def main(ads_token):
         for bibcode in paper['identifier']:
             if bibcode in skip_bibcodes:
                 skip = True
+        if paper['title'][0] in skip_title:
+            skip = True
         if skip:
             continue
         # PhD thesis
-        if paper['bibstem'][0]=='PhDT':
+        if paper['bibstem'][0] == 'PhDT':
             a = 'Sebastian Bocquet'
             pub_type = 'other'
         else:
             # First-author
             if 'Bocquet' in paper['author'][0]:
-                first_author_count+= paper['citation_count']
-                top_tier_count+= paper['citation_count']
-                if len(paper['author'])==2:
+                first_author_count += paper['citation_count']
+                top_tier_count += paper['citation_count']
+                if len(paper['author']) == 2:
                     a = ' & '.join([paper['author'][i].split(',')[0] for i in range(2)])
                 else:
                     a = ', '.join([paper['author'][i].split(',')[0] for i in range(3)])+' et al.'
                 pub_type = 'top'
             # Top-tier
-            elif ('Bocquet' in paper['author'][1])|('Bocquet' in paper['author'][2])|(paper['bibcode'] in top_tier_bibcodes):
-                top_tier_count+= paper['citation_count']
-                for aa,a in enumerate(paper['author'][:5]):
+            elif (('Bocquet' in paper['author'][1])
+                  | ('Bocquet' in paper['author'][2])
+                  | any(x in top_tier_bibcodes for x in paper['identifier'])):
+                top_tier_count += paper['citation_count']
+                pub_type = 'top'
+                for aa, a in enumerate(paper['author'][:5]):
                     if 'Bocquet' in a:
                         # Want minimum of three authors listed
-                        if aa==1:
+                        if aa == 1:
                             a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+2)])+' et al.'
                         else:
                             a = ', '.join([paper['author'][i].split(',')[0] for i in range(aa+1)])+' et al.'
-                        pub_type = 'top'
                         break
             # Other
             else:
@@ -130,7 +135,7 @@ def main(ads_token):
                     if bibcode in white_paper_bibcodes:
                         pub_type = 'white_paper'
                 # Is it the ATel?
-                if paper['bibstem'][0]=='ATel':
+                if paper['bibstem'][0] == 'ATel':
                     pub_type = 'other'
                 a = paper['author'][0].split(',')[0]+' et al.'
 
@@ -146,15 +151,15 @@ def main(ads_token):
         ads_link = "(<a href='%s%s%s'>ADS abstract</a>)"%(ads_prefix, paper['bibcode'], ads_suffix)
         this = author_year_title+ref+doi+ads_link+"</li>\n"
 
-        if pub_type=='top':
+        if pub_type == 'top':
             top_tier_list.append(this)
-        elif pub_type=='coauthor':
+        elif pub_type == 'coauthor':
             co_pub_list.append(this)
         elif pub_type == 'SPT':
             SPT_pub_list.append(this)
-        elif pub_type=='DES':
+        elif pub_type == 'DES':
             DES_pub_list.append(this)
-        elif pub_type=='white_paper':
+        elif pub_type == 'white_paper':
             white_paper_list.append(this)
         else:
             other_pub_list.append(this)
@@ -222,5 +227,5 @@ def main(ads_token):
 
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main(sys.argv[1])
