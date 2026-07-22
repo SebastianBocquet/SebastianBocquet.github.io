@@ -36,7 +36,6 @@ DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.1174
                         ]
 white_paper_bibcodes = ['2019BAAS...51c.279M', '2022arXiv220306795B', '2022arXiv220308024A']
 skip_bibcodes = []
-skip_title = ['On the cosmology dependence of the cluster weak-lensing mass bias']
 
 ads_prefix = "https://ui.adsabs.harvard.edu/abs/"
 ads_suffix = "/abstract"
@@ -86,8 +85,6 @@ def main(ads_token):
         for bibcode in paper['identifier']:
             if bibcode in skip_bibcodes:
                 skip = True
-        if paper['title'][0] in skip_title:
-            skip = True
         if skip:
             continue
         # PhD thesis
@@ -145,7 +142,7 @@ def main(ads_token):
         else:
             ref = "%s"%paper['bibstem'][0]
         if 'doi' in paper.keys():
-            doi = ", DOI:<a href='%s%s'>%s</a> "%(doi_prefix, paper['doi'][0], paper['doi'][0])
+            doi = ", DOI: <a href='%s%s'>%s</a> "%(doi_prefix, paper['doi'][0], paper['doi'][0])
         else:
             doi = " "
         ads_link = "(<a href='%s%s%s'>ADS abstract</a>)"%(ads_prefix, paper['bibcode'], ads_suffix)
