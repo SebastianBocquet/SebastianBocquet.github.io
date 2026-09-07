@@ -8,8 +8,9 @@ DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.
                          'arXiv:2310.00059', 'arXiv:2310.13207', 'arXiv:2311.07512', 'arXiv:2304.10128',
                          'arXiv:2404.02153', 'arXiv:2407.10961', 'arXiv:2503.13631', 'arXiv:2503.13632',
                          'arXiv:2503.17271', 'arXiv:2502.12914', 'arXiv:2509.02068']
-SPT_senior_bibcodes = ['arXiv:2602.11279', 'arXiv:2603.20163', 'arXiv:2605.01022', 'arXiv:2602.10107',
-                       'arXiv:2601.20551', 'arXiv:2602.06334', 'arXiv:2606.26223', 'arXiv:2607.05784']
+SPT_bibcodes = ['arXiv:2602.11279', 'arXiv:2603.20163', 'arXiv:2605.01022', 'arXiv:2602.10107',
+                'arXiv:2601.20551', 'arXiv:2602.06334', 'arXiv:2606.26223', 'arXiv:2607.05784',
+                'arXiv:2608.00302', 'arXiv:2608.06343', 'arXiv:2510.24669', 'arXiv:2608.31136']
 DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.11740', 'arXiv:2201.02762',
                         '2023MNRAS.521..836S',
                         'arXiv:2203.16565', 'arXiv:2201.11142', 'arXiv:2203.07128', 'arXiv:2203.11306',
@@ -125,7 +126,7 @@ def main(ads_token):
                             pub_type = 'DES'
                 # SPT paper
                 for bibcode in paper['identifier']:
-                    if bibcode in SPT_senior_bibcodes:
+                    if bibcode in SPT_bibcodes:
                         pub_type = 'SPT'
                 # White papers
                 for bibcode in paper['identifier']:
