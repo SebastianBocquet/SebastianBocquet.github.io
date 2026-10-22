@@ -180,7 +180,8 @@ def main(ads_token):
     for line in lines:
         if 'overview_content' in line:
             out_lines.append("%d refereed publications<br>\n"%refereed)
-            out_lines.append("<a href=\"https://ui.adsabs.harvard.edu/search/p_=0&q=author:&quot;bocquet,s&quot; database:astronomy\">Publications on ADS</a>: %d citations, h-index %d<br>\n"%(citations, hindex))
+            # out_lines.append("<a href=\"https://ui.adsabs.harvard.edu/search/p_=0&q=author:&quot;bocquet,s&quot; database:astronomy\">Publications on ADS</a>: %d citations, h-index %d<br>\n" % (citations, hindex))
+            out_lines.append("<a href=\"https://scixplorer.org/search?q=author:Bocquet,S database:astronomy&sort:date+desc\">Publications on SciX</a>: %d citations, h-index %d<br>\n" % (citations, hindex))
             if scholarly_info is not None:
                 out_lines.append("<a href=\"https://scholar.google.com/citations?hl=en&user=K9dkRiQAAAAJ\">Profile on Google Scholar</a>: %d citations, h-index %d<br>\n"%(scholarly_info['citedby'], scholarly_info['hindex']))
             out_lines.append("ORCID: <a href=\"https://orcid.org/0000-0002-4900-805X\">https://orcid.org/0000-0002-4900-805X</a>")
