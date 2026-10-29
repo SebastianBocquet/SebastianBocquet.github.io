@@ -13,11 +13,11 @@ jobs:
         shell: bash -l {0}
     steps:
     - name: Setup Python Environment
-      uses: actions/setup-python
+      uses: actions/setup-python@v7
       with:
         python-version: 3.13
     - run: pip install requests scholarly
-    - uses: actions/checkout
+    - uses: actions/checkout@v7
     - name: Execute the script
       env:
         ADS_DEV_KEY: ${{ secrets.ADS_TOKEN }}
