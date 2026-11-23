@@ -11,7 +11,7 @@ DES_coauthor_bibcodes = ['2021MNRAS.507.5758S', 'arXiv:2105.13541', 'arXiv:2202.
 SPT_bibcodes = ['arXiv:2602.11279', 'arXiv:2603.20163', 'arXiv:2605.01022', 'arXiv:2602.10107',
                 'arXiv:2601.20551', 'arXiv:2602.06334', 'arXiv:2606.26223', 'arXiv:2607.05784',
                 'arXiv:2608.00302', 'arXiv:2608.06343', 'arXiv:2510.24669', 'arXiv:2608.31136',
-                'arXiv:2610.28633']
+                'arXiv:2610.28633', 'arXiv:2611.18876']
 DES_builder_bibcodes = ['arXiv:2112.01541', 'arXiv:2201.05227', 'arXiv:2201.11740', 'arXiv:2201.02762',
                         '2023MNRAS.521..836S',
                         'arXiv:2203.16565', 'arXiv:2201.11142', 'arXiv:2203.07128', 'arXiv:2203.11306',
@@ -147,7 +147,7 @@ def main(ads_token):
             doi = ", DOI: <a href='%s%s'>%s</a> "%(doi_prefix, paper['doi'][0], paper['doi'][0])
         else:
             doi = " "
-        ads_link = "(<a href='%s%s%s'>ADS abstract</a>)"%(ads_prefix, paper['bibcode'], ads_suffix)
+        ads_link = "(<a href='%s%s%s'>SciX abstract</a>)"%(ads_prefix, paper['bibcode'], ads_suffix)
         this = author_year_title+ref+doi+ads_link+"</li>\n"
 
         if pub_type == 'top':
